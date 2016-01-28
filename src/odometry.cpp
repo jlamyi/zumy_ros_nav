@@ -19,29 +19,31 @@ int main(int argc, char** argv){
 
   //initialize transform and last transform
   tf::StampedTransform transform, last_transform;
+
   bool no_data = true;
   while(no_data){ 
     try{
       listener.lookupTransform("/fake_tf", "/world", 
                              ros::Time(0), transform);
       no_data = false;
-      printf("Fetched initial tf data");
+      printf("Fetched initial tf data\n");
     }
     catch (tf::TransformException ex){
-      ROS_ERROR("%s",ex.what());
+      //ROS_ERROR("%s",ex.what());
       ros::Duration(1.0).sleep();
       no_data = true;
     }
   }
   last_transform = transform;
 
+  printf("Start calculating odometry data!\n");
+
   //main loop
   while (node.ok()){
 
     //fetch tf data
     try{
-      listener.lookupTransform("/fake_tf", "/world",  
-                               ros::Time(0), transform);
+      listener.lookupTransform("/fake_tf", "/world", ros::Time(0), transform);
     }
     catch (tf::TransformException ex){
       ROS_ERROR("%s",ex.what());
@@ -65,7 +67,7 @@ int main(int argc, char** argv){
     //publish ros odometry topic 
     if(dt!=0){
 
-        //set the header     
+      //set the header     
     	odom.header.stamp = current_time;
     	odom.header.frame_id = "odom";
 

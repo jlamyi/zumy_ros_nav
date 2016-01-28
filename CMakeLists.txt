@@ -5,7 +5,7 @@ project(zumy_ros_nav)
 ## if COMPONENTS list like find_package(catkin REQUIRED COMPONENTS xyz)
 ## is used, also find other catkin packages
 find_package(catkin REQUIRED COMPONENTS
-  move_base
+  move_base tf
 )
 
 ## System dependencies are found with CMake's conventions
@@ -101,16 +101,20 @@ include_directories(
 # )
 
 ## Declare a cpp executable
-# add_executable(zumy_ros_nav_node src/zumy_ros_nav_node.cpp)
+add_executable(tf_fake_node src/tf_fake.cpp)
+add_executable(odo_pub_node src/odometry.cpp)
 
 ## Add cmake target dependencies of the executable/library
 ## as an example, message headers may need to be generated before nodes
 # add_dependencies(zumy_ros_nav_node zumy_ros_nav_generate_messages_cpp)
 
 ## Specify libraries to link a library or executable target against
-# target_link_libraries(zumy_ros_nav_node
-#   ${catkin_LIBRARIES}
-# )
+target_link_libraries(tf_fake_node  
+   ${catkin_LIBRARIES}
+)
+target_link_libraries(odo_pub_node  
+   ${catkin_LIBRARIES}
+)
 
 #############
 ## Install ##
