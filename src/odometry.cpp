@@ -84,7 +84,7 @@ int main(int argc, char** argv){
     	odom.twist.twist.linear.z = dz/dt;
     	odom.twist.twist.angular.z = dth/dt; 
       
-        //publish
+      //publish
     	odo_pub.publish(odom);
     }
 

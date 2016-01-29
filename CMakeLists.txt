@@ -103,6 +103,7 @@ include_directories(
 ## Declare a cpp executable
 add_executable(tf_fake_node src/tf_fake.cpp)
 add_executable(odo_pub_node src/odometry.cpp)
+add_executable(fake_LaserScan_node src/fake_LaserScan.cpp)
 
 ## Add cmake target dependencies of the executable/library
 ## as an example, message headers may need to be generated before nodes
@@ -115,7 +116,9 @@ target_link_libraries(tf_fake_node
 target_link_libraries(odo_pub_node  
    ${catkin_LIBRARIES}
 )
-
+target_link_libraries(fake_LaserScan_node
+   ${catkin_LIBRARIES}
+)
 #############
 ## Install ##
 #############

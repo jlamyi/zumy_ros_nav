@@ -1,15 +1,15 @@
 <!-- Zumy Navigation Stack configuration -->
 
 <launch>
-  <!-- node pkg="sensor_node_pkg" type="sensor_node_type" name="sensor_node_name" output="screen">
-    <param name="sensor_param" value="param_value" />
-  </node-->
 
+  <!-- Laser Scanner node -->
+  <node pkg="zumy_ros_nav" type="fake_LaserScan_node" name="fake_LaserScan" output="screen" />
+  
   <!-- Transform configuration pkg -->
   <!--include file="$(find ros_vrpn_client)/launch/optitrack.launch" / -->
   <node pkg="zumy_ros_nav" type="tf_fake_node" name="tf_fake" output="screen" />
 
-  <!-- Odom pkg -->
+  <!-- Odom node -->
   <node pkg="zumy_ros_nav" type="odo_pub_node" name="odo_pub_node" output="screen" />
 
   <!-- It is unnecessary. It is here for reference -->
