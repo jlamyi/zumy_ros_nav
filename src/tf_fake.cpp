@@ -1,23 +1,51 @@
 #include <ros/ros.h>
 #include <tf/transform_broadcaster.h>
+#include <geometry_msgs/Twist.h>
+#include <math.h>
 
+// Position initialization
+float x = 1.0;
+float y = 1.0;
+float yaw = 0.0;
+float dx = 0.0;
+float dy = 0.0;
+float dyaw = 0.0;
+
+void drive(const geometry_msgs::Twist msg){
+  if(msg.angular.z!=0) dyaw = msg.angular.z / 10;
+  else {
+    dx = (msg.linear.x * cos(yaw) - msg.linear.y * sin(yaw)) / 10;
+    dy = (msg.linear.y * cos(yaw) - msg.linear.x * sin(yaw)) / 10;
+  }
+}
 
 int main(int argc, char** argv){
+  // Node initialization
   ros::init(argc, argv, "tf_fake");
   //ros::Time::init();
   ros::NodeHandle node;
   if (argc !=1){ROS_ERROR("Error argument");return -1;};
-
   ros::Rate r(10);
+
+  // For closed-loop simulation
+  ros::Subscriber sub = node.subscribe("cmd_vel", 100, drive);
+
+  // Tf variable declaration
+	static tf::TransformBroadcaster br;
+	tf::Transform transform;
+  tf::Quaternion q;
+
   while(node.ok())
   {
-	  static tf::TransformBroadcaster br;
-	  
-	  tf::Transform transform;
-	  transform.setOrigin(tf::Vector3(1.0, 1.0, 0.0));
+    // Data update
+    x += dx;
+    y += dy;
+    yaw += dyaw;
 
-	  tf::Quaternion q;
-	  q.setRPY(0, 0, 0);
+    // Data transmit
+	  transform.setOrigin(tf::Vector3(x, y, 0.0));
+
+	  q.setRPY(0, 0, yaw);
 	  transform.setRotation(q);
 
 	  br.sendTransform(tf::StampedTransform(transform, ros::Time::now(), "world", "fake_tf"));
