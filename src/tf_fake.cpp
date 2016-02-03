@@ -7,6 +7,7 @@
 float x = 1.0;
 float y = 1.0;
 float yaw = 0.0;
+float yaw_counter = 0.0;
 float dx = 0.0;
 float dy = 0.0;
 float dyaw = 0.0;
@@ -14,8 +15,14 @@ float dyaw = 0.0;
 void drive(const geometry_msgs::Twist msg){
   if(msg.angular.z!=0) dyaw = msg.angular.z / 10;
   else {
-    dx = (msg.linear.x * cos(yaw) - msg.linear.y * sin(yaw)) / 10;
-    dy = (msg.linear.y * cos(yaw) - msg.linear.x * sin(yaw)) / 10;
+    if(x > 0.5 && y > 0.5){
+      dx = (msg.linear.x * cos(yaw) - msg.linear.y * sin(yaw)) / 10;
+      dy = (msg.linear.y * cos(yaw) - msg.linear.x * sin(yaw)) / 10;
+    }
+    else{
+      dx = 0;
+      dy = 0;
+    }
   }
 }
 
@@ -40,7 +47,18 @@ int main(int argc, char** argv){
     // Data update
     x += dx;
     y += dy;
-    yaw += dyaw;
+    yaw_counter += dyaw;
+    if(yaw_counter > (M_PI/2) && yaw_counter < M_PI){
+      yaw = yaw_counter - M_PI;
+    }
+    else if(yaw_counter > M_PI){
+      yaw_counter -= M_PI;
+      yaw = yaw_counter;
+    }
+    else{
+      yaw = yaw_counter;
+    }
+    
 
     // Data transmit
 	  transform.setOrigin(tf::Vector3(x, y, 0.0));
