@@ -67,7 +67,7 @@ int main(int argc, char** argv){
 	  transform.setRotation(q);
 
 	  br.sendTransform(tf::StampedTransform(transform, ros::Time::now(), "world", "fake_tf"));
-	  br.sendTransform(tf::StampedTransform(transform, ros::Time::now(), "world", "fake_LaserScan"));
+	  br.sendTransform(tf::StampedTransform(transform, ros::Time::now(), "world", "fake_ls_tf"));
 
 	  ros::spinOnce();
 	  r.sleep();
