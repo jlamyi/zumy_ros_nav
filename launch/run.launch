@@ -20,4 +20,8 @@
     <rosparam file="$(find zumy_ros_nav)/global_costmap_params.yaml" command="load" />
     <rosparam file="$(find zumy_ros_nav)/base_local_planner_params.yaml" command="load" />
   </node>
+
+  <!-- Remap cmd_vel to odroid -->
+  <!-- remap from="cmd_vel" to="odroidx/cmd_vel" -->
+
 </launch>
