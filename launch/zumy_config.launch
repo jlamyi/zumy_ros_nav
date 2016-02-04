@@ -6,11 +6,11 @@
   <node pkg="zumy_ros_nav" type="fake_LaserScan_node" name="fake_LaserScan" output="screen" />
   
   <!-- Transform configuration pkg -->
-  <!--include file="$(find ros_vrpn_client)/launch/optitrack.launch" / -->
-  <node pkg="zumy_ros_nav" type="tf_fake_node" name="tf_fake" output="screen" />
+  <!-- include file="$(find ros_vrpn_client)/launch/optitrack.launch" / -->
+  <!-- node pkg="zumy_ros_nav" type="tf_fake_node" name="tf_fake" output="screen" /-->
 
   <!-- Odom node -->
-  <node pkg="zumy_ros_nav" type="odo_pub_node" name="odo_pub_node" output="screen" />
+  <!-- node pkg="zumy_ros_nav" type="odo_pub_node" name="odo_pub_node" output="screen" /-->
 
   <!-- It is unnecessary. It is here for reference -->
   <!--node pkg="transform_configuration_pkg" type="transform_configuration_type" name="transform_configuration_name" output="screen">
